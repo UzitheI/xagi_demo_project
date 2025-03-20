@@ -5,8 +5,8 @@ app = FastAPI()
 
 # Include API routes
 app.include_router(tryon.router, prefix="/tryon", tags=["Try-On"])
-app.include_router(models.router, prefix="/models", tags=["Models"])
-app.include_router(garments.router, prefix="/garments", tags=["Garments"])
+# app.include_router(models.router, prefix="/models", tags=["Models"])
+# app.include_router(garments.router, prefix="/garments", tags=["Garments"])
 
 @app.get("/")
 def root():
