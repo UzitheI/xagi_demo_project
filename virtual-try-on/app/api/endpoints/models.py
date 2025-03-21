@@ -87,12 +87,12 @@ def get_output_images_by_garment(garment_id: int, db: Session = Depends(get_db))
     return output_images
 
 @router.get("/models", response_model=List[HumanModelBase])
-def get_output_images_by_garment(db: Session = Depends(get_db)):
+def get_all_human_models(db: Session = Depends(get_db)):
     output_images = db.query(HumanModel).all()
     return output_images
 
 @router.get("/garments", response_model=List[GarmentBase])
-def get_output_images_by_garment(db: Session = Depends(get_db)):
+def get_all_by_garment(db: Session = Depends(get_db)):
     output_images = db.query(Garment).all()
     return output_images
 
