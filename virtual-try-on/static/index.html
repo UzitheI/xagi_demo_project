@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirts | MEN</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .filter-pill {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        
+        .filter-pill .close {
+            margin-left: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .card {
+            border: none;
+            transition: transform 0.2s;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Fixed dimensions for image container based on original images */
+        .image-container {
+            position: relative;
+            width: 100%;
+            /* We're not setting a fixed height here */
+            overflow: hidden;
+        }
+        
+        /* Make sure each product image has same aspect ratio */
+        .card-img-top {
+            width: 100%;
+            aspect-ratio: 3/4; /* Set this to match your original images */
+            object-fit: contain; /* This will ensure the image isn't cropped */
+        }
+        
+        .card-img-overlay {
+            background: rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .card:hover .card-img-overlay {
+            opacity: 1;
+        }
+        
+        .quick-view {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .product-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .price-container {
+            display: flex;
+            align-items: baseline;
+        }
+        
+        .current-price {
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 8px;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #6c757d;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+        
+        .discount {
+            color: #ff5722;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .try-buy-btn {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: #000;
+            color: white;
+            font-size: 14px;
+            padding: 6px 15px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+        
+        .heart-icon {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            color: #888;
+            z-index: 10;
+        }
+        
+        .heart-icon:hover {
+            color: #ff0000;
+        }
+        
+        .store-name {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        
+        .dropend .dropdown-toggle::after {
+            display: none;
+        }
+        
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+        
+        .fabric-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        .oversized-badge {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row mb-3">
+            <div class="col-8">
+                <h4>Shop | Clothing Section</h4>
+                <p class="text-muted">3 items</p>
+            </div>
+            <div class="col-4">
+                <div class="dropdown float-end">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Models
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="sortDropdown" id="modelDropdown">
+                        <!-- Models will be populated here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="filter-pill">
+                    T-Shirts <span class="close">&times;</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Product 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="image-container">
+                        <img id="product-img-1" src="./static/images/garment1.png" class="card-img-top" alt="Solid Plum T-Shirt">
+                        <div class="card-img-overlay"></div>
+                        <div class="quick-view">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="try-buy-btn">Try & Buy</div>
+                    </div>
+                    <div class="card-body pt-2">
+                        <p class="store-name">The Souled Store</p>
+                        <h5 class="product-title">NBA 2025 LA Lakers</h5>
+                        <div class="price-container">
+                            <span class="current-price">₹649</span>
+                            <span class="original-price">₹999</span>
+                            <span class="discount">35% OFF</span>
+                        </div>
+                        <button class="heart-icon">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="image-container">
+                        <img id="product-img-2" src="./static/images/garment2.png" class="card-img-top" alt="Doberman Men Printed T-Shirt">
+                        <div class="card-img-overlay"></div>
+                        <div class="quick-view">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="fabric-info">HEAVY GAUGE COTTON TERRY 220 GSM</div>
+                        <div class="try-buy-btn">Try & Buy</div>
+                        <div class="oversized-badge">OVERSIZED FIT</div>
+                    </div>
+                    <div class="card-body pt-2">
+                        <p class="store-name">Pronk</p>
+                        <h5 class="product-title">Gucci Premium Oversized Terry T-Shirt</h5>
+                        <div class="price-container">
+                            <span class="current-price">₹799</span>
+                            <span class="original-price">₹1599</span>
+                            <span class="discount">50% OFF</span>
+                        </div>
+                        <button class="heart-icon">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="image-container">
+                        <img id="product-img-3" src="./static/images/garment3.png" class="card-img-top" alt="Wrath Wings Men Printed T-Shirt">
+                        <div class="card-img-overlay"></div>
+                        <div class="quick-view">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="fabric-info">HEAVY GAUGE COTTON TERRY 220 GSM</div>
+                        <div class="try-buy-btn">Try & Buy</div>
+                        <div class="oversized-badge">OVERSIZED FIT</div>
+                    </div>
+                    <div class="card-body pt-2">
+                        <p class="store-name">Pronk</p>
+                        <h5 class="product-title">Wrath Women Premium Oversized Top</h5>
+                        <div class="price-container">
+                            <span class="current-price">₹799</span>
+                            <span class="original-price">₹1599</span>
+                            <span class="discount">50% OFF</span>
+                        </div>
+                        <button class="heart-icon">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script>
+        // Toggle heart icon on click
+        document.querySelectorAll('.heart-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const heartIcon = this.querySelector('i');
+                if (heartIcon.classList.contains('far')) {
+                    heartIcon.classList.remove('far');
+                    heartIcon.classList.add('fas');
+                    heartIcon.style.color = '#ff0000';
+                } else {
+                    heartIcon.classList.remove('fas');
+                    heartIcon.classList.add('far');
+                    heartIcon.style.color = '#888';
+                }
+            });
+        });
+        
+        // Remove filter pill
+        document.querySelector('.filter-pill .close').addEventListener('click', function() {
+            this.parentElement.style.display = 'none';
+        });
+        
+        // Quick view hover effect
+        document.querySelectorAll('.quick-view').forEach(view => {
+            view.addEventListener('mouseover', function() {
+                this.style.backgroundColor = '#000';
+                this.querySelector('i').style.color = '#fff';
+            });
+            
+            view.addEventListener('mouseout', function() {
+                this.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                this.querySelector('i').style.color = '#000';
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Store original image dimensions when the page loads
+        let originalImageDimensions = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Capture original image dimensions for reference
+            document.querySelectorAll('.card-img-top').forEach((img, index) => {
+                img.onload = function() {
+                    originalImageDimensions[index] = {
+                        width: this.naturalWidth,
+                        height: this.naturalHeight,
+                        aspectRatio: this.naturalWidth / this.naturalHeight
+                    };
+                };
+            });
+            
+            // Fetch and populate models
+            fetchAndPopulateModels();
+        });
+    
+        // Function to fetch models and populate dropdown
+        function fetchAndPopulateModels() {
+            axios.get('http://127.0.0.1:8000/models/models')
+            .then(response => {
+                const models = response.data;
+                const dropdown = document.getElementById('modelDropdown');
+                dropdown.innerHTML = ''; // Clear existing content
+    
+                models.forEach(model => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.className = 'dropdown-item';
+                    a.href = '#';
+                    a.textContent = model.name;
+    
+                    // Add a click event listener for each model item
+                    a.addEventListener('click', () => {
+                        // Update the dropdown button text
+                        document.getElementById('sortDropdown').textContent = model.name;
+                        
+                        // Fetch the output images for the selected model
+                        axios.get(`http://127.0.0.1:8000/models/output_images/human/${model.id}`)
+                        .then(detailResponse => {
+                            const outputImages = detailResponse.data;
+    
+                            // Update the product images based on the garment ID
+                            outputImages.forEach((image, index) => {
+                                const productImg = document.getElementById(`product-img-${index + 1}`);
+                                if (productImg) {
+                                    // Create a new image to preload and check dimensions
+                                    const tempImg = new Image();
+                                    tempImg.onload = function() {
+                                        // Now set the source of the actual image
+                                        productImg.src = image.output_image_url;
+                                    };
+                                    tempImg.src = image.output_image_url;
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching model details:', error);
+                        });
+                    });
+    
+                    li.appendChild(a);
+                    dropdown.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching models:', error);
+            });
+        }
+    </script>
+</body>
+</html>
