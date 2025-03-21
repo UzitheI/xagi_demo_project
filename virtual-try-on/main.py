@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import tryon, models, garments
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
@@ -23,10 +24,4 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to Virtual Try-On API", "status": "online"}
-
-# Optional: Add a specific route for index.html if needed
-@app.get("/index.html")
-async def serve_index():
-    from fastapi.responses import FileResponse
     return FileResponse("static/index.html")
