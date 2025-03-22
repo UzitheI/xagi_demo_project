@@ -4,31 +4,10 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from app.db.models import HumanModel, Garment, OutputImage
-
-from app.db.models import Base
-
-import pymysql
-import os
-from dotenv import load_dotenv
-load_dotenv()
-pymysql.install_as_MySQLdb()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-
-# Get database connection parameters from environment variables
-db_user = os.getenv('DB_USER', 'default_user')
-db_password = os.getenv('DB_PASSWORD', 'default_password')
-db_host = os.getenv('DB_HOST', 'localhost')
-db_port = os.getenv('DB_PORT', '3306')
-db_name = os.getenv('DB_NAME', 'xagi_demo')
-
-sqlalchemy_url = f"mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
-
-# Replace the sqlalchemy.url in alembic.ini
-config.set_main_option('sqlalchemy.url', sqlalchemy_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -39,7 +18,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = Base.metadata
+target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -59,8 +38,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = sqlalchemy_url
-    print("The fetched url is ", sqlalchemy_url)
+    url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
         target_metadata=target_metadata,
