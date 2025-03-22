@@ -350,7 +350,7 @@
     
         // Function to fetch models and populate dropdown
         function fetchAndPopulateModels() {
-            axios.get('http://127.0.0.1:8000/models/models')
+            axios.get('https://xagi-demo-project.onrender.com/models/models')
             .then(response => {
                 const models = response.data;
                 const dropdown = document.getElementById('modelDropdown');
@@ -369,7 +369,7 @@
                         document.getElementById('sortDropdown').textContent = model.name;
                         
                         // Fetch the output images for the selected model
-                        axios.get(`http://127.0.0.1:8000/models/output_images/human/${model.id}`)
+                        axios.get(`https://xagi-demo-project.onrender.com/output_images/human/${model.id}`)
                         .then(detailResponse => {
                             const outputImages = detailResponse.data;
                             console.log(outputImages)
