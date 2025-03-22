@@ -3,62 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T-Shirts | MEN</title>
+    <title>NEWMEW | Buy Premium Clothes at the Best Rates</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+        }
+        
+        .page-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .filter-pill {
             display: inline-flex;
             align-items: center;
-            background-color: #f8f9fa;
-            padding: 6px 12px;
+            background-color: #f0f0f0;
+            padding: 6px 15px;
             border-radius: 20px;
-            margin-right: 8px;
+            margin-right: 10px;
             font-size: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .filter-pill:hover {
+            background-color: #e8e8e8;
         }
         
         .filter-pill .close {
             margin-left: 8px;
             font-size: 16px;
             cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .filter-pill .close:hover {
+            opacity: 1;
         }
         
         .card {
             border: none;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
             margin-bottom: 30px;
             position: relative;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
         }
         
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        /* Fixed dimensions for image container based on original images */
         .image-container {
             position: relative;
             width: 100%;
-            /* We're not setting a fixed height here */
             overflow: hidden;
+            background-color: #f9f9f9;
         }
         
-        /* Make sure each product image has same aspect ratio */
         .card-img-top {
             width: 100%;
-            aspect-ratio: 3/4; /* Set this to match your original images */
-            object-fit: contain; /* This will ensure the image isn't cropped */
+            aspect-ratio: 3/4;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+        
+        .card:hover .card-img-top {
+            transform: scale(1.03);
         }
         
         .card-img-overlay {
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(0, 0, 0, 0.03);
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: opacity 0.3s;
         }
         
         .card:hover .card-img-overlay {
@@ -67,46 +98,64 @@
         
         .quick-view {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
-            width: 36px;
-            height: 36px;
+            top: 12px;
+            right: 12px;
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .quick-view:hover {
+            transform: scale(1.05);
         }
         
         .product-title {
             font-size: 14px;
             margin-bottom: 5px;
-            font-weight: 500;
+            font-weight: 600;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            min-height: 40px;
         }
         
         .price-container {
             display: flex;
             align-items: baseline;
+            margin-top: 8px;
         }
         
         .current-price {
             font-weight: bold;
             font-size: 16px;
             margin-right: 8px;
+            color: #111;
         }
         
         .original-price {
             text-decoration: line-through;
-            color: #6c757d;
+            color: #888;
             font-size: 14px;
             margin-right: 8px;
         }
         
         .discount {
-            color: #ff5722;
+            color: #e53935;
             font-weight: bold;
             font-size: 14px;
+            background-color: #ffebee;
+            padding: 2px 6px;
+            border-radius: 3px;
         }
         
         .try-buy-btn {
@@ -115,77 +164,153 @@
             left: 15px;
             background-color: #000;
             color: white;
-            font-size: 14px;
-            padding: 6px 15px;
+            font-size: 13px;
+            padding: 7px 16px;
             border-radius: 4px;
             z-index: 10;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        .card:hover .try-buy-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .try-buy-btn:hover {
+            background-color: #333;
         }
         
         .heart-icon {
             position: absolute;
             bottom: 15px;
             right: 15px;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.9);
             border: none;
-            font-size: 20px;
+            font-size: 18px;
             color: #888;
             z-index: 10;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .heart-icon:hover {
+            transform: scale(1.05);
+        }
+        
+        .heart-icon i.fas {
             color: #ff0000;
         }
         
         .store-name {
-            color: #6c757d;
-            font-size: 14px;
-            margin-bottom: 3px;
-        }
-        
-        .dropend .dropdown-toggle::after {
-            display: none;
+            color: #757575;
+            font-size: 13px;
+            margin-bottom: 4px;
+            font-weight: 500;
         }
         
         .dropdown-toggle {
             cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
+        }
+        
+        .dropdown-toggle:hover {
+            background-color: #f5f5f5;
+            border-color: #d0d0d0;
+        }
+        
+        .dropdown-menu {
+            border-radius: 6px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+        
+        .dropdown-item {
+            padding: 8px 16px;
+            transition: background-color 0.2s;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
         }
         
         .fabric-info {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 3px 6px;
-            border-radius: 3px;
+            top: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 8px;
+            border-radius: 4px;
             font-size: 10px;
             font-weight: bold;
             z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
         }
         
         .oversized-badge {
             position: absolute;
             bottom: 15px;
             right: 15px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 3px 6px;
-            border-radius: 3px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 4px 8px;
+            border-radius: 4px;
             font-size: 10px;
             font-weight: bold;
             z-index: 10;
+            color: white;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover .oversized-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-body {
+            padding: 15px;
+            background-color: white;
+        }
+        
+        .item-count {
+            background-color: #f0f0f0;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container mt-4">
-        <div class="row mb-3">
-            <div class="col-8">
-                <h4>Shop | Clothing Section</h4>
-                <p class="text-muted">3 items</p>
+        <div class="row mb-4 page-header">
+            <div class="col-md-8">
+                <h4>Shop | Clothing Section <span class="item-count">3 items</span></h4>
             </div>
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="dropdown float-end">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        Models
+                    <button class="btn dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-circle me-2"></i> Models
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown" id="modelDropdown">
                         <!-- Models will be populated here -->
@@ -197,14 +322,14 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="filter-pill">
-                    T-Shirts <span class="close">&times;</span>
+                    <i class="fas fa-tshirt me-2"></i> T-Shirts <span class="close">&times;</span>
                 </div>
             </div>
         </div>
         
         <div class="row">
             <!-- Product 1 -->
-            <div class="col-md-3">
+            <div class="col-md-4 col-lg-3">
                 <div class="card">
                     <div class="image-container">
                         <img id="product-img-1" src="./static/images/garment1.png" class="card-img-top" alt="Solid Plum T-Shirt">
@@ -214,8 +339,8 @@
                         </div>
                         <div class="try-buy-btn">Try & Buy</div>
                     </div>
-                    <div class="card-body pt-2">
-                        <p class="store-name">The Souled Store</p>
+                    <div class="card-body">
+                        <p class="store-name"><i class="fas fa-store-alt me-1"></i> The Souled Store</p>
                         <h5 class="product-title">NBA 2025 LA Lakers</h5>
                         <div class="price-container">
                             <span class="current-price">₹649</span>
@@ -230,7 +355,7 @@
             </div>
             
             <!-- Product 2 -->
-            <div class="col-md-3">
+            <div class="col-md-4 col-lg-3">
                 <div class="card">
                     <div class="image-container">
                         <img id="product-img-2" src="./static/images/garment2.png" class="card-img-top" alt="Doberman Men Printed T-Shirt">
@@ -242,8 +367,8 @@
                         <div class="try-buy-btn">Try & Buy</div>
                         <div class="oversized-badge">OVERSIZED FIT</div>
                     </div>
-                    <div class="card-body pt-2">
-                        <p class="store-name">Pronk</p>
+                    <div class="card-body">
+                        <p class="store-name"><i class="fas fa-store-alt me-1"></i> Pronk</p>
                         <h5 class="product-title">Gucci Premium Oversized Terry T-Shirt</h5>
                         <div class="price-container">
                             <span class="current-price">₹799</span>
@@ -258,7 +383,7 @@
             </div>
             
             <!-- Product 3 -->
-            <div class="col-md-3">
+            <div class="col-md-4 col-lg-3">
                 <div class="card">
                     <div class="image-container">
                         <img id="product-img-3" src="./static/images/garment3.png" class="card-img-top" alt="Wrath Wings Men Printed T-Shirt">
@@ -270,8 +395,8 @@
                         <div class="try-buy-btn">Try & Buy</div>
                         <div class="oversized-badge">OVERSIZED FIT</div>
                     </div>
-                    <div class="card-body pt-2">
-                        <p class="store-name">Pronk</p>
+                    <div class="card-body">
+                        <p class="store-name"><i class="fas fa-store-alt me-1"></i> Pronk</p>
                         <h5 class="product-title">Wrath Women Premium Oversized Top</h5>
                         <div class="price-container">
                             <span class="current-price">₹799</span>
@@ -321,7 +446,7 @@
             });
             
             view.addEventListener('mouseout', function() {
-                this.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                this.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
                 this.querySelector('i').style.color = '#000';
             });
         });
