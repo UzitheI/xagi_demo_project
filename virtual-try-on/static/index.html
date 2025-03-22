@@ -369,7 +369,7 @@
                         document.getElementById('sortDropdown').textContent = model.name;
                         
                         // Fetch the output images for the selected model
-                        axios.get(`https://xagi-demo-project.onrender.com/output_images/human/${model.id}`)
+                        axios.get(`https://xagi-demo-project.onrender.com/models/output_images/human/${model.id}`)
                         .then(detailResponse => {
                             const outputImages = detailResponse.data;
                             console.log(outputImages)
