@@ -372,6 +372,7 @@
                         axios.get(`https://xagi-demo-project.onrender.com/models/output_images/human/${model.id}`)
                         .then(detailResponse => {
                             const outputImages = detailResponse.data;
+                            console.log(outputImages)
     
                             // Update the product images based on the garment ID
                             outputImages.forEach((image, index) => {
