@@ -474,58 +474,61 @@
         });
     
         // Function to fetch models and populate dropdown
-        function fetchAndPopulateModels() {
-            axios.get('https://xagi-demo-project.onrender.com/models/models')
-            .then(response => {
-                const models = response.data;
-                const dropdown = document.getElementById('modelDropdown');
-                dropdown.innerHTML = ''; // Clear existing content
-    
-                models.forEach(model => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.className = 'dropdown-item';
-                    a.href = '#';
-                    a.textContent = model.name;
-    
-                    // Add a click event listener for each model item
-                    a.addEventListener('click', () => {
-                        // Update the dropdown button text
-                        document.getElementById('sortDropdown').textContent = model.name;
+        // Function to fetch models and populate dropdown
+function fetchAndPopulateModels() {
+    axios.get('https://xagi-demo-project.onrender.com/models/models')
+    .then(response => {
+        const models = response.data;
+        const dropdown = document.getElementById('modelDropdown');
+        dropdown.innerHTML = ''; // Clear existing content
+
+        models.forEach(model => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.className = 'dropdown-item';
+            a.href = '#';
+            a.textContent = model.name;
+
+            // Add a click event listener for each model item
+            a.addEventListener('click', () => {
+                // Update the dropdown button text
+                document.getElementById('sortDropdown').textContent = model.name;
+                
+                // Fetch the output images for the selected model
+                axios.get(`https://xagi-demo-project.onrender.com/models/output_images/human/${model.id}`)
+                .then(detailResponse => {
+                    const outputImages = detailResponse.data;
+                    console.log('Output images:', outputImages);
+
+                    // Match images to product cards based on garment_id
+                    outputImages.forEach(image => {
+                        const garmentId = image.garment_id;
+                        const productImg = document.getElementById(`product-img-${garmentId}`);
                         
-                        // Fetch the output images for the selected model
-                        axios.get(`https://xagi-demo-project.onrender.com/models/output_images/human/${model.id}`)
-                        .then(detailResponse => {
-                            const outputImages = detailResponse.data;
-                            console.log(outputImages)
-    
-                            // Update the product images based on the garment ID
-                            outputImages.forEach((image, index) => {
-                                const productImg = document.getElementById(`product-img-${index + 1}`);
-                                if (productImg) {
-                                    // Create a new image to preload and check dimensions
-                                    const tempImg = new Image();
-                                    tempImg.onload = function() {
-                                        // Now set the source of the actual image
-                                        productImg.src = image.output_image_url;
-                                    };
-                                    tempImg.src = image.output_image_url;
-                                }
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching model details:', error);
-                        });
+                        if (productImg) {
+                            // Create a new image to preload and check dimensions
+                            const tempImg = new Image();
+                            tempImg.onload = function() {
+                                // Now set the source of the actual image
+                                productImg.src = image.output_image_url;
+                            };
+                            tempImg.src = image.output_image_url;
+                        }
                     });
-    
-                    li.appendChild(a);
-                    dropdown.appendChild(li);
+                })
+                .catch(error => {
+                    console.error('Error fetching model details:', error);
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching models:', error);
             });
-        }
+
+            li.appendChild(a);
+            dropdown.appendChild(li);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching models:', error);
+    });
+}
     </script>
 </body>
 </html>
